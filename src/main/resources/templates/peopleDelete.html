@@ -1,0 +1,20 @@
+<form onsubmit="deletePerson(event, ${person.id})">
+    <input type="submit" value="Delete"/>
+</form>
+
+<script>
+    function deletePerson(event, id) {
+        event.preventDefault();
+        if (confirm('Вы уверены, что хотите удалить этого пользователя?')) {
+            fetch(`/people/${id}`, {
+                method: 'DELETE',
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = "/people"; // Перенаправление после успешного удаления
+                } else {
+                    alert('Error deleting person');
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,32 @@
+<form id="updateForm" onsubmit="updatePerson(event, ${person.id})">
+    <label for="name">Full Name:</label>
+    <input type="text" th:field="*{name}" id="name" required minlength="2"/>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name errors</div>
+
+    <label for="yearOfBirth">Year of Birth:</label>
+    <input type="number" th:field="*{yearOfBirth}" id="yearOfBirth" required min="1900" max="2023"/>
+    <div style="color:red" th:if="${#fields.hasErrors('yearOfBirth')}" th:errors="*{yearOfBirth}">Year Of Birth errors</div>
+
+    <input type="submit" value="Update!"/>
+</form>
+
+<script>
+    function updatePerson(event, id) {
+        event.preventDefault();
+        const formData = new FormData(document.getElementById('updateForm'));
+        fetch(`/people/${id}`, {
+            method: 'PATCH',
+            body: formData
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = "/people"; // Redirect after successful update
+            } else {
+                return response.text().then(text => {
+                    alert('Error updating person: ' + text);
+                });
+            }
+        }).catch(error => {
+            alert('Error updating person: ' + error.message);
+        });
+    }
+</script>

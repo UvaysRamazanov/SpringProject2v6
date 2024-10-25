@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: postgres
+    password: 1234
+    url: jdbc:postgresql://localhost:5432/f_project
+    driver-class-name: org.postgresql.Driver
+
+    # todo нужно добавить docker файл, чтобы можно было запускать приложение локально
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
